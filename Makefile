@@ -1,18 +1,8 @@
-KAFKA_VERSION = 1.0.0
+KAFKA_VERSION = 1.0.2
+SCALA_VERSION = 2.11
 VERSION     = $(KAFKA_VERSION)
 
 PROJECT     = docker-kafka
-REGISTRY_URL = registry.cn-shanghai.aliyuncs.com/arvintian
 
-
-build: 
-	docker build -t $(PROJECT):$(VERSION) .
-
-package: build
-	docker tag $(PROJECT):$(VERSION) $(REGISTRY_URL)/$(PROJECT):$(VERSION)
-
-publish: package
-	docker push $(REGISTRY_URL)/$(PROJECT):$(VERSION)
-
-clean:
-	docker images | grep -E "($(PROJECT))" | awk '{print $$3}' | uniq | xargs -I {} docker rmi --force {}
+build:
+	docker build --build-arg kafka_version=$(KAFKA_VERSION) --build-arg scala_version=$(SCALA_VERSION) -t $(PROJECT):$(VERSION) .

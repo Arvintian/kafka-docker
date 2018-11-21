@@ -1,7 +1,7 @@
 FROM anapsix/alpine-java
 
-ARG kafka_version=1.0.0
-ARG scala_version=2.11
+ARG kafka_version
+ARG scala_version
 
 ENV KAFKA_VERSION=$kafka_version \
     SCALA_VERSION=$scala_version \
